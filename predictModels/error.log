@@ -6,6 +6,8 @@ Are you sure you want to continue connecting (yes/no)? yes
 Warning: Permanently added 'github.com,192.30.252.128' (RSA) to the list of known hosts.
 Permission denied (publickey).
 fatal: The remote end hung up unexpectedly
+
+
 [li11@ehscmplp01/edelgene predictModels]$ git push -u origin master
 Permission denied (publickey).
 fatal: The remote end hung up unexpectedly
