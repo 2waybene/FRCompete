@@ -8,6 +8,9 @@
 
 setwd("X:/myGit/FRCompete/predictModels/Data")
 dataDir <- "X:/myGit/FRCompete/predictModels/Data"
+
+setwd("/Users/li11/myGit/FRCompete/predictModels/Data")
+dataDir <- "/Users/li11/myGit/FRCompete/predictModels/Data"
 load ("Hong_processed_data.Rda")
 
 
@@ -17,11 +20,15 @@ load ("Hong_processed_data.Rda")
 library(caret)
 TrainData <- allCmb[,-1]
 TrainClasses <- allCmb[,1]
+trt=trainControl(method='cv',number=10)
 
 nbFit <- train(TrainData, TrainClasses,
                  method = "nb",
-                 trControl = trainControl(method = "boot"))
-
+                 trControl = trt)
+#ainControl(method = "boot"))
+library(klaR)
+nbFit2 <- NaiveBayes(TrainData, TrainClasses)
+, usekernel=TRUE)
 
 ##==============================================
 ##	Inital NB model in e1071 works just fine
