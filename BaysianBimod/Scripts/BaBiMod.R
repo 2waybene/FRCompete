@@ -1,8 +1,5 @@
-setwd("/Users/li11/myGit/FRCompete/mixtureModels/output/")
-# efg, 23 Aug 2006
-# Study single Gaussian
+setwd("/Users/li11/myGit/FRCompete/BaysianBimod/output/")
 
-pdf("SingleGaussian.pdf", width=8.0, height=10.0)
 
 # Here P is the same as dnorm (probability density function for normal
 # distribution), but other functions could be tried here.
@@ -18,6 +15,61 @@ B <- function (x, f0, alpha, k)
     ((1+alpha*(x^2))/(1+alpha*k))*P(x, 0.0, 1.0)
   }
 }
+
+BS <- function (x, f0 , h , lambda, alpha, k = 4)
+{
+  #if ((f0 == "SN") & ( h = "SN")){
+    y = P(x,0.0,1.0)
+    w = lambda*(B(x, f0, alpha, k))
+    z = c()
+    for (i in 1:length(y))
+    {
+      if (y[i] < w[i]) 
+        { z[i] = x[i]} 
+      else 
+        { z[i]=-x[i]}    
+  #}
+    }
+    z
+}
+
+Delta <- 0.01
+x <- seq(-5,5, by=Delta)
+y1 <-  B(x,"SN",1,4)
+y3 <-  B(x,"SN",3,4)
+y10 <-  B(x,"SN",10,4)
+y0 <-  B(x,"SN",0,4)  #unimodal!!
+
+
+##### Gaussian
+plot(x,y0, type="l", lwd=3,
+     main="Comparing effect from alpha",
+     xlab="x", ylab="y")
+abline(h=0, v=0, lty="dotted")
+
+lines (x, y3, type = "l", lty="dashed")
+lines (x, y10, type = "l", lty ="dotted")
+lines(x, y1, type="l", lty="dotdash")
+
+
+
+z1 = BS(x, "SN", "SN", 0.5, 1)
+z3 = BS(x, "SN", "SN", 0.5, 3)
+z10 = BS(x, "SN", "SN", 0.5, 10)
+
+##### Gaussian
+plot(x,z1, type="l", lwd=3,
+     main="Comparing effect from alpha",
+     xlab="x", ylab="y")
+abline(h=0, v=0, lty="dotted")
+
+lines (x, z3, type = "l", lty="dashed")
+lines (x, z10, type = "l", lty ="dotted")
+
+lines(x, y1, type="l", lty="dotdash")
+
+
+##======Code from Stower Institutes===================================
 # integrate(P, -1, 1, mean=0, sd=1) is same as integrate(dnorm, -1, 1, mean=0, sd=1)
 # integrate(P,-5,5, mean=0, sd=1)   # should be close to 1.0
 

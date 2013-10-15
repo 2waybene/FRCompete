@@ -1,3 +1,4 @@
+
 data(x_gideon)
 ## Assuming normal, estimate initial conditions from data
 fit.default.gideon <- mix.mle(x_gideon$horn)
