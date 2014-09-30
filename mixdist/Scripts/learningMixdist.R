@@ -1,0 +1,20 @@
+library(mixdist)
+data(cassie)
+cassie <- as.mixdata(cassie)
+plot(cassie)
+?as.mixdata
+head(cassie)
+fitcass1 <- mix(cassie,mixparam(c(3,5,7,9,11),.5),"gamma",mixconstr(consigma="CCV"))
+summary(fitcass1)
+plot(fitcass1)
+
+fitcass2 <- mix(cassie,coef(fitcass1),"gamma")
+fitcass2 <- mix(cassie,coef(fitcass1),"gamma",iterlim=150)
+summary(fitcass2)
+plot(fitcass2)
+
+opar <- par()
+par (mfrow=c(2,1))
+plot(fitcass1)
+plot(fitcass2)
+par(opar)
